@@ -1,7 +1,11 @@
 package com.example.videoteca.utils
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.LayoutRes
 import com.bumptech.glide.Glide
 import java.io.InputStream
 import java.nio.charset.Charset
@@ -26,3 +30,6 @@ fun ImageView.loadImage(image: String){
         .into(this)
 
 }
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
+    LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
