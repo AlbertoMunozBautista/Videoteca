@@ -1,5 +1,6 @@
 package com.example.videoteca.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = MoviesAdapter()
+        adapter = MoviesAdapter(::onMovieClicked)
 
         recyclerview.adapter = adapter
 
@@ -31,5 +32,11 @@ class MainActivity : AppCompatActivity() {
         val json = getJsonFromAssets("movies.json")
         val movieList = Gson().fromJson(json, Array<Movie>::class.java).toList()
         return ArrayList(movieList)
+    }
+
+    private fun onMovieClicked(movie : Movie){
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("movie", movie)
+        startActivity(intent)
     }
 }

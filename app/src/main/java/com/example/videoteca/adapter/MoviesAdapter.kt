@@ -6,7 +6,7 @@ import com.example.videoteca.R
 import com.example.videoteca.model.Movie
 import com.example.videoteca.utils.inflate
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesViewHolder>(){
+class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapter<MoviesViewHolder>(){
 
     private var movieList = arrayListOf<Movie>()
 
@@ -22,6 +22,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesViewHolder>(){
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val movie = movieList[position]
         holder.bind(movie)
+        holder.itemView.setOnClickListener { listener(movie) }
     }
 
     fun refreshList(movieList : ArrayList<Movie>){
