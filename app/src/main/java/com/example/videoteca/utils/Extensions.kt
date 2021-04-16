@@ -8,18 +8,24 @@ import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import com.bumptech.glide.Glide
 import java.io.InputStream
+import java.lang.Exception
 import java.nio.charset.Charset
 import java.security.AccessControlContext
 
 fun Context.getJsonFromAssets(file: String) : String? {
-    var json = ""
-    val stream : InputStream = assets.open(file)
-    val size : Int = stream.available()
-    val buffer = ByteArray(size)
-    stream.read(buffer)
-    stream.close()
+    var json: String? = null
 
-    json = String(buffer, Charset.defaultCharset())
+    try {
+        val stream : InputStream = assets.open(file)
+        val size : Int = stream.available()
+        val buffer = ByteArray(size)
+        stream.read(buffer)
+        stream.close()
+
+        json = String(buffer, Charset.defaultCharset())
+    } catch (e: Exception){
+    }
+
     return json
 }
 

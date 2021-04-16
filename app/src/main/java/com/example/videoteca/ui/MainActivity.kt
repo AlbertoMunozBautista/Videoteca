@@ -31,18 +31,18 @@ class MainActivity : AppCompatActivity() {
 
         adapter.refreshList(getListFromJson())
 
-        searchField.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    val filteredList = copyList.filter { it.name.toLowerCase(Locale.getDefault()).contains(newText) }
-                    adapter.filterByName(filteredList)
-                }
+        searchField.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
-
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    val filteredList = copyList.filter {
+                        it.name.toLowerCase(Locale.getDefault()).contains(newText)
+                    }
+                    adapter.filterByName(filteredList)
+                }
                 return false
             }
         })
@@ -53,9 +53,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getListFromJson() : ArrayList<Movie>{
+
+        var movieList = arrayListOf<Movie>()
+
         val json = getJsonFromAssets("movies.json")
-        val movieList = Gson().fromJson(json, Array<Movie>::class.java).toList()
-        copyList.addAll(movieList)
+        json?.let {
+            movieList = ArrayList(Gson().fromJson(json, Array<Movie>::class.java).toList())
+            copyList.addAll(movieList)
+        }
+
         return ArrayList(movieList)
     }
 
