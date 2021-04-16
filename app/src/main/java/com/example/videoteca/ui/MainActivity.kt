@@ -46,6 +46,10 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+        
+        btSort.setOnClickListener{
+            adapter.modifyObject()
+        }
     }
 
     private fun getListFromJson() : ArrayList<Movie>{
