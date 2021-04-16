@@ -10,7 +10,9 @@ class MoviesViewHolder(view: View): RecyclerView.ViewHolder(view){
 
     fun bind(movie: Movie){
         itemView.movieTitle.text = movie.name
-        itemView.movieCover.loadImage(movie.cover)
+        movie?.cover?.let {mMovie ->
+            itemView.movieCover.loadImage(mMovie)
+        }
     }
 
 }
